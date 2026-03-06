@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-ios-bg: #000000;
+  --color-ios-accent: #c084fc; /* Lighter Vibrant Purple */
+  --color-ios-blue: #60a5fa; /* Lighter Blue */
+  --color-ios-pink: #f472b6; /* Lighter Pink */
+  --color-ios-surface: rgba(255, 255, 255, 0.04);
+  --color-ios-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-ios-bg text-white antialiased overflow-hidden font-sans;
+  }
+
+  /* Apple Intelligence Style Background - Much Brighter and Vibrant */
+  .ios-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #f8fafc; /* Very light slate base */
+    overflow: hidden;
+    filter: saturate(1.8) contrast(1.1);
+    pointer-events: none;
+  }
+
+  .ios-background::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(at 0% 0%, rgba(168, 85, 247, 0.6) 0, transparent 60%),
+      radial-gradient(at 50% 0%, rgba(59, 130, 246, 0.6) 0, transparent 60%),
+      radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.6) 0, transparent 60%),
+      radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.6) 0, transparent 60%),
+      radial-gradient(at 50% 100%, rgba(236, 72, 153, 0.6) 0, transparent 60%),
+      radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.6) 0, transparent 60%);
+    z-index: 0;
+    animation: mesh-move 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes mesh-move {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.1) translate(2%, 2%); }
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+
+  .ios-background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent);
+    z-index: 1;
+  }
+
+  .ios-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.7;
+    pointer-events: none;
+    mix-blend-mode: soft-light;
+    will-change: transform;
+  }
+
+  .glow-1 {
+    width: 100vw;
+    height: 100vw;
+    top: -20%;
+    right: -10%;
+    background: radial-gradient(circle, var(--color-ios-accent) 0%, transparent 70%);
+    animation: liquid-1 30s ease-in-out infinite alternate;
+  }
+
+  .glow-2 {
+    width: 120vw;
+    height: 120vw;
+    bottom: -30%;
+    left: -20%;
+    background: radial-gradient(circle, var(--color-ios-blue) 0%, transparent 70%);
+    animation: liquid-2 35s ease-in-out infinite alternate-reverse;
+  }
+
+  .glow-3 {
+    width: 80vw;
+    height: 80vw;
+    top: 20%;
+    left: 10%;
+    background: radial-gradient(circle, var(--color-ios-pink) 0%, transparent 70%);
+    opacity: 0.5;
+    animation: liquid-3 25s ease-in-out infinite alternate;
+  }
+
+  .glow-4 {
+    position: absolute;
+    width: 90vw;
+    height: 90vw;
+    bottom: 10%;
+    right: 10%;
+    background: radial-gradient(circle, #4f46e5 0%, transparent 70%);
+    opacity: 0.4;
+    filter: blur(150px);
+    animation: liquid-1 40s ease-in-out infinite reverse;
+    mix-blend-mode: screen;
+  }
+}
+
+@keyframes liquid-1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(10%, 15%) scale(1.2) rotate(20deg); }
+  66% { transform: translate(-10%, 20%) scale(0.8) rotate(-20deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+
+@keyframes liquid-2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-15%, -10%) scale(1.3) rotate(-30deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+
+@keyframes liquid-3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20%, 15%) scale(0.7); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.ios-glass {
+  @apply relative overflow-hidden bg-white/[0.25] backdrop-blur-[80px] rounded-[2.8rem] shadow-2xl;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 20px 40px rgba(255, 255, 255, 0.2),
+    0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+.neural-grid {
+  background-image: radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.neural-node {
+  @apply w-2 h-2 rounded-full bg-ios-accent shadow-[0_0_10px_rgba(192,132,252,0.5)];
+}
+
+.neural-line {
+  @apply h-px bg-gradient-to-r from-ios-accent/20 to-transparent;
+}
+
+.ios-glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: glass-shimmer 8s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes glass-shimmer {
+  0% { transform: translateX(-100%) skewX(-20deg); }
+  100% { transform: translateX(100%) skewX(-20deg); }
+}
+
+.ios-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%, rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+}
+
+/* Noise Texture for realistic glass */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.02;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.ios-input-container {
+  @apply bg-white/[0.2] backdrop-blur-[40px] border border-white/[0.3] rounded-[2rem] transition-all duration-500;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.ios-button {
+  @apply rounded-full transition-all duration-300 active:scale-95 disabled:opacity-50;
+}
+
+.text-apple {
+  @apply tracking-tight font-medium;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Markdown styling for iOS feel - Dark for light background */
+.prose-ios {
+  @apply text-black/80 leading-relaxed font-sans text-[15px];
+}
+.prose-ios p { @apply mb-4 last:mb-0; }
+.prose-ios code { @apply bg-black/5 px-1.5 py-0.5 rounded text-ios-accent font-mono text-[13px]; }
+.prose-ios pre { @apply bg-black/5 p-5 rounded-2xl border border-black/5 my-5 overflow-x-auto; }
+.prose-ios pre code { @apply bg-transparent p-0 text-black/70; }
+.prose-ios h1, .prose-ios h2, .prose-ios h3 { @apply text-black font-semibold mb-3 mt-7 first:mt-0; }
+.prose-ios ul, .prose-ios ol { @apply ml-5 mb-5 space-y-2; }
+.prose-ios li { @apply list-disc marker:text-black/20; }
