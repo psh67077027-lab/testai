@@ -1,13 +1,59 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>AI SYSTEM DATA CENTER</title>
+    <style>
+        body { background: #0a0a0a; color: #33ff33; font-family: 'Courier New', monospace; padding: 30px; line-height: 1.5; }
+        .file-section { border: 1px solid #33ff33; margin-bottom: 30px; padding: 15px; background: rgba(0, 255, 0, 0.05); }
+        h2 { background: #33ff33; color: #000; display: inline-block; padding: 2px 10px; }
+        pre { white-space: pre-wrap; word-break: break-all; font-size: 14px; color: #ccffcc; }
+        .error { color: #ff3333; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>📟 [ DATA SCANNING COMPLETE ]</h1>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
 
+    <script>
+        // 당신이 올려준 파일 목록을 제가 직접 다 적었습니다.
+        const files = [
+            "metadata.json",
+            "package.json",
+            "App.tsx",
+            "main.tsx",
+            "index.css",
+            "tsconfig.json",
+            "vite.config.ts"
+        ];
+
+        const root = document.getElementById('root');
+
+        files.forEach(fileName => {
+            const section = document.createElement('div');
+            section.className = 'file-section';
+            section.innerHTML = `<h2>📄 FILE: ${fileName}</h2><div id="content-${fileName}">로드 중...</div>`;
+            root.appendChild(section);
+
+            fetch(fileName)
+                .then(res => {
+                    if(!res.ok) throw new Error();
+                    return res.text(); // JSON뿐만 아니라 TSX 파일도 읽기 위해 text로 받음
+                })
+                .then(data => {
+                    const target = document.getElementById(`content-${fileName}`);
+                    // 내용이 JSON이면 예쁘게 정렬, 아니면 그냥 텍스트로 출력
+                    try {
+                        const jsonData = JSON.parse(data);
+                        target.innerHTML = `<pre>${JSON.stringify(jsonData, null, 2)}</pre>`;
+                    } catch(e) {
+                        target.innerHTML = `<pre>${data.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
+                    }
+                })
+                .catch(() => {
+                    document.getElementById(`content-${fileName}`).innerHTML = `<span class="error">로드 실패 (파일이 없거나 경로가 다름)</span>`;
+                });
+        });
+    </script>
+</body>
+</html>
